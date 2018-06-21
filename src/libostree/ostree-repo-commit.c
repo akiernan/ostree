@@ -903,8 +903,9 @@ write_content_object (OstreeRepo         *self,
             return glnx_throw (error, "min-free-space-percent '%u%%' would be exceeded, %s more required",
                                self->min_free_space_percent, formatted_required);
           else
-            return glnx_throw (error, "min-free-space-size %luMB would be exceeded, %s more required",
-                               self->min_free_space_mb, formatted_required);
+            return glnx_throw (error, "min-free-space-size %lluMB would be exceeded, %s more required",
+                               (long long unsigned)self->min_free_space_mb,
+                               formatted_required);
         }
       /* This is the main bit that needs mutex protection */
       self->txn.max_blocks -= object_blocks;
@@ -1617,8 +1618,9 @@ ostree_repo_prepare_transaction (OstreeRepo     *self,
             return glnx_throw (error, "min-free-space-percent '%u%%' would be exceeded, %s available",
                                self->min_free_space_percent, formatted_free);
           else
-            return glnx_throw (error, "min-free-space-size %luMB would be exceeded, %s available",
-                               self->min_free_space_mb, formatted_free);
+            return glnx_throw (error, "min-free-space-size %lluMB would be exceeded, %s available",
+                               (long long unsigned)self->min_free_space_mb,
+                               formatted_free);
         }
       g_mutex_unlock (&self->txn_lock);
     }
